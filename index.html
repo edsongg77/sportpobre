@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>sportpobre</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43);
+            color: rgb(255, 255, 255);
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            margin-bottom: 30px;
+        }
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 12px;
+            background: #00c9ff;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 10px;
+        }
+     button:hover{
+        background: #92fe9d;
+        transform: scale(1.1);
+     }
+           
+        #mensagem {
+            margin: 20px;
+            font-size: 24px;
+        }
+
+        .card {
+            margin-top: 40px;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(244, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(248, 248, 248, 0.397);
+            display: inline-block;
+
+        }
+
+        /* VIDEO */
+        .video-container {
+            width: 300px;
+            height: 500px;
+            margin: auto;
+            border-radius: 15px;
+            overflow: hidden;
+            background: black;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            
+        }
+
+        /* CORAÇÃO */
+        .coracao {
+            position: absolute;
+            color: red;
+            font-size: 20px;
+            animation: subir 1s ease-out forwards;
+        }
+
+@keyframes subir {
+        0%{
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        100%{
+            opacity: 0;
+            transform: translateY(-100px) 
+            scale(1.5);
+        }
+}
+
+    </style>
+</head>
+
+<body> 
+    <h1> meu site interativo</h1>
+
+    <!-- BOTÃO COM CONTADOR -->
+   <button onclick="clicou()">clique aqui</button>
+
+   <div id="mensagem">cliques: 0</div>
+
+   <!-- PLAYER DE MUSICA -->
+    <div class="card">
+        <h2>Tocando agora</h2>
+
+    <audio id="musica"
+    src="sua-musica.mp3"></audio>
+
+    <br><br>
+
+    <button onclick="tocar()">tocar</button>
+    <button onclick="pausar()">pausar</button>
+    <button onclick="parar()">parar</button>
+
+         <!-- VIDEO EMBAIXO -->
+         <br><br>
+         <div class="video-container">
+            <video controls>
+            <source src="seu-video.mp4"
+            type="video/mp4">
+    seu navegador nao suporta video
+         </video>
+         
+    </div>
+
+    <script>
+        //CONTADOR
+        let contador = 0;
+
+function clicou() {
+    contador++;
+    document.getElementById("mensagem").innerText = "Cliques: " + contador;
+
+    const numCoracoes = 5; // número de corações por clique
+    for (let i = 0; i < numCoracoes; i++) {
+        const coracao = document.createElement("div");
+        coracao.classList.add("coracao");
+        coracao.innerText = "❤️";
+        coracao.style.position = "absolute";
+
+        // pegar posição do botão
+        const button = document.querySelector("button");
+        const rect = button.getBoundingClientRect();
+
+        // adicionar posição aleatória próxima ao botão
+        coracao.style.left = rect.left + rect.width / 2 + (Math.random() * 40 - 20) + window.scrollX + "px";
+        coracao.style.top = rect.top + window.scrollY + "px";
+
+        // adicionar na tela
+        document.body.appendChild(coracao);
+
+        // remover depois da animação
+        setTimeout(() => {
+            coracao.remove();
+        }, 1000);
+    }
+
+}
+
+        //PLAYER DE MÚSICA
+        const musica =
+    document.getElementById("musica");
+
+        function tocar() {
+            musica.play();
+            
+        }
+
+        function pausar() {
+            musica.pause();
+            
+        }
+
+        function parar() {
+            musica.pause();
+            musica.currentTime = 0;
+            
+        }
+            
+            
+    </script>
+
+ </body>
+</html>
